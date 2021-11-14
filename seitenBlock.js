@@ -11,7 +11,7 @@
 
 "use strict"
 
-console.log(localStorage);
+
 const buchstabenArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
 const blockedPages = []
 let gesperrt = false;
@@ -24,24 +24,19 @@ let gesperrt = false;
                 if (localStorage.getItem(`page${zahl.toString()}`)) {
                     speicherzahl++
                 }
-                console.log("Hier!");
                 zahl++
-
             }
 
             if (speicherzahl === 0) {
-                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("PWD-EINGEBEN! NICHT VERÄNDERBAR! Mind. 10 Zeichen!")))
+                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("Type in your passwort!")))
             } else {
-                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("Welche Seite möchten Sie sperren? Bitte eine ganze URL angeben!", "Bspw. https://www.google.de")))
-                console.log(localStorage.length)
-                console.log(localStorage.getItem(`page${speicherzahl}`))
+                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("Which page do you want to block?", "FE. https://www.google.de")))
             }
 
         } else if (e.key === "Tab" && gesperrt)  {
             let isTrue = false;
             while (!isTrue) {
-                let gzl = prompt("PWD-EINGEBEN!")
-                console.log(gzl);
+                let gzl = prompt("Type in your passwort")
                 if (localStorage.getItem(`page0`) == crypt(localStorage.getItem(`keyNum0`),gzl)) {
                     document.body.removeAttribute("style")
                     !isTrue
@@ -49,9 +44,7 @@ let gesperrt = false;
                     !gesperrt
                 }
             }
-
-        } else { console.log("PEACE")}
-
+        } 
     })
 
     function check() {
@@ -60,21 +53,12 @@ let gesperrt = false;
         // alert("Hier 2")
         if (localStorage.getItem(`keyNum${copy}`)) {
         let c = crypt(localStorage.getItem(`keyNum${copy}`), document.URL)
-        console.log(c);
-        console.log(localStorage.getItem(`page${copy.toString()}`))
         if (localStorage.getItem(`page${copy.toString()}`) == c) {
-            console.log(c)
-            console.log(document.URL);
-            console.log(localStorage.getItem(`keyNum${copy}`));
             document.body.setAttribute("style", "display:none")
             gesperrt = true;
             let itv = setInterval(tm(), 200)
             let cnsl = setInterval(cnl(), 50)
-
         }
-
-
-
     }
         copy++
     }
@@ -102,17 +86,11 @@ function random() {
         if (localStorage.getItem(`keyNum${num}`)) {
             numz++
         }
-        console.log("Hier!");
         num++
-
-
     }
-
     localStorage.setItem(`keyNum${numz.toString()}`, crypt("InternetExplorer38", zuff.join("") ))
     return zuff.join("")
-
 }
-
 
 const crypt = (salt, text) => {
     const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
