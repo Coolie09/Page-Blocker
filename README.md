@@ -19,4 +19,4 @@ Future Add-Ons:
 
 1.) Save stuff saver 
 2.) Add timer for page block
-3.) dynamic passwort changer 
+3.) dynamic passwort changer  
