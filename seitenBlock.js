@@ -10,6 +10,10 @@
 // ==/UserScript==
 
 "use strict"
+let information = { 
+    blocker: "Anas Al Natsheh",
+    host: ["ogs.google.com", "www.google.de", "www.google.fr", "wilhelm-gym.de"]
+}
 window.addEventListener("keydown", e => controll(e))
 function controll(obj) {
     if (obj.key == "Dead") {
@@ -44,14 +48,19 @@ function timestamp() {
 
 function blockpage() {
     let i = setInterval(() => { 
+       // document.body.setAttribute("style", "display:none");
+        console.clear()
+        let p = prompt(`This page has been blocked by ${information.blocker}! Enter the passwort to unlock it!`).trim();
+        if (checkpass(p.valueOf())) clearInterval(i);   
+    }, 10)
+   
+}
+
+function blockpagepass() {
+    let i = setInterval(() => { 
         document.body.setAttribute("style", "display:none");
         console.clear()
     }, 10)
-    let p;
-    while (true) { 
-        p = prompt("This page has been blocked! Enter the passwort to unlock it!").trim();
-        if (checkpass(p.valueOf())) {clearInterval(i); break}
-    }
 }
 
 function checkpass(txt) {
@@ -67,9 +76,19 @@ function crypt(salt, text) {
     return text .split("").map(textToChars).map(applySaltToChar).map(byteHex).join("");
 }
 
+function checkSpecificPages() {
+    information.host.forEach(e => { 
+        if (e == location.host) return {block: true}
+        console.log(e);
+        console.log(location.host)
+    })
+}
+
 function checkpageblock() {
     let u = checkpasswort().hasValue;
-    if (u) blockpage();
-    else return true
+    let y = checkSpecificPages();
+    if (u) blockpage()
+    else return false
+    // else if (y) blockpagepass()
 }
 checkpageblock()
