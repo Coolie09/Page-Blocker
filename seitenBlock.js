@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         LookPage
 // @namespace    http://tampermonkey.net/
-// @version      0.1
-// @description  try to take over the world!
+// @version      2.0
+// @description  Blocks Specific pages
 // @author       Coolie09
 // @match        https://*/*
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
@@ -10,98 +10,66 @@
 // ==/UserScript==
 
 "use strict"
+window.addEventListener("keydown", e => controll(e))
+function controll(obj) {
+    if (obj.key == "Dead") {
+        let pass = checkpasswort();
+        if (pass.hasValue) blockpage()
+        else createPasswort()
+    }
+}
 
-
-const buchstabenArray = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z","a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
-const blockedPages = []
-let gesperrt = false;
-    window.addEventListener("keydown", e => {
-        if (e.key == "Dead") {
-
-            let zahl = 0;
-            let speicherzahl = 0;
-            while (zahl <= localStorage.length) {
-                if (localStorage.getItem(`page${zahl.toString()}`)) {
-                    speicherzahl++
-                }
-                zahl++
-            }
-
-            if (speicherzahl === 0) {
-                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("Type in your passwort!")))
-            } else {
-                localStorage.setItem(`page${speicherzahl}`,  crypt(crypt("InternetExplorer38", random()) ,prompt("Which page do you want to block?", "FE. https://www.google.de")))
-            }
-
-        } else if (e.key === "Tab" && gesperrt)  {
-            let isTrue = false;
-            while (!isTrue) {
-                let gzl = prompt("Type in your passwort")
-                if (localStorage.getItem(`page0`) == crypt(localStorage.getItem(`keyNum0`),gzl)) {
-                    document.body.removeAttribute("style")
-                    !isTrue
-                    clearInterval(itv)
-                    !gesperrt
-                }
-            }
+function checkpasswort() {
+    let zahl = 0;
+    let speicherzahl = 0;
+        while (zahl <= localStorage.length) {
+        if (localStorage.getItem(`master${zahl}`)) {
+            speicherzahl++
         } 
-    })
-
-    function check() {
-        let copy = 0;
-    while (copy <= localStorage.length) {
-        // alert("Hier 2")
-        if (localStorage.getItem(`keyNum${copy}`)) {
-        let c = crypt(localStorage.getItem(`keyNum${copy}`), document.URL)
-        if (localStorage.getItem(`page${copy.toString()}`) == c) {
-            document.body.setAttribute("style", "display:none")
-            gesperrt = true;
-            let itv = setInterval(tm(), 200)
-            let cnsl = setInterval(cnl(), 50)
-        }
+            zahl++
     }
-        copy++
+    if (speicherzahl > 0) return {hasValue: true, length: speicherzahl}
+    return {hasValue: false, length: speicherzahl}
+}
+
+function createPasswort() {
+    let t = timestamp().toString()
+    localStorage.setItem(`master0`, crypt(t, (prompt("Please fill in your passwort!")))+(t));
+    alert("Passwort has been created sucsessfully! Please refresh nevertheless the page!");
+}
+
+function timestamp() {
+    return Date.now()
+}
+
+function blockpage() {
+    let i = setInterval(() => { 
+        document.body.setAttribute("style", "display:none");
+        console.clear()
+    }, 10)
+    let p;
+    while (true) { 
+        p = prompt("This page has been blocked! Enter the passwort to unlock it!").trim();
+        if (checkpass(p.valueOf())) {clearInterval(i); break}
     }
 }
 
-function tm() {
-     document.body.setAttribute("style", "display:none")
+function checkpass(txt) {
+    console.log((crypt(localStorage.getItem(`master0`).substring(12), txt)+ localStorage.getItem(`master0`).substring(12)) == localStorage.getItem(`master0`))
+    if (crypt((localStorage.getItem(`master0`).substring(12)), txt) === localStorage.getItem(`master0`).substring(0,12)) return true
+    return false
 }
 
-function cnl() {
-    console.clear();
-}
-
-
-
-function random() {
-    let zuff = [];
-    let num = 0;
-    let numz = 0;
-    for (let i = 0; i < 10; i++) {
-        zuff.push(Math.random() * (buchstabenArray.length - 1) + 1)
-    }
-
-    while (num <= localStorage.length) {
-        if (localStorage.getItem(`keyNum${num}`)) {
-            numz++
-        }
-        num++
-    }
-    localStorage.setItem(`keyNum${numz.toString()}`, crypt("InternetExplorer38", zuff.join("") ))
-    return zuff.join("")
-}
-
-const crypt = (salt, text) => {
+function crypt(salt, text) {
     const textToChars = (text) => text.split("").map((c) => c.charCodeAt(0));
-    const byteHex = (n) => ("0" + Number(n).toString(16)).substr(-2);
+    const byteHex = (n) => ("0" + Number(n).toString(16)).substring(-2);
     const applySaltToChar = (code) => textToChars(salt).reduce((a, b) => a ^ b, code);
-
-    return text
-      .split("")
-      .map(textToChars)
-      .map(applySaltToChar)
-      .map(byteHex)
-      .join("");
+    return text .split("").map(textToChars).map(applySaltToChar).map(byteHex).join("");
 }
-check()
+
+function checkpageblock() {
+    let u = checkpasswort().hasValue;
+    if (u) blockpage();
+    else return true
+}
+checkpageblock()
