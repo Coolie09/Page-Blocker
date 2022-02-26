@@ -11,7 +11,7 @@
 
 "use strict"
 let information = { 
-    blocker: "Anas Al Natsheh",
+    blocker: undefined,
     host: ["ogs.google.com", "www.google.de", "www.google.fr", "wilhelm-gym.de"]
 }
 window.addEventListener("keydown", e => controll(e))
