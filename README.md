@@ -1,6 +1,6 @@
 # PageBlocker [2.0] (Almost finished version)
 
-## Warning! 
+## Warning! ⚠️
 This code may contain (unlikely) a few bugs! Please contact me in therefor in the issues section! Thx a lot! <br>
 It is important, that the user, that the page is blocked for, dosn't know tampermonkey! That's why it is good to release it from the Chrome-bar! <br>
 
@@ -27,7 +27,7 @@ To use this script, you have to have the chrome-extension Tampermonkey. After ad
 The passwort is just hardly changable, so trie to remember it good. Otherwise, I would betray the logic of the script, which isn't propably very hard to understand. <br>
     
 ## Future Add-Ons:
-- Add timer for page block <br>
+- Add timer for page block <br> ⏱️
 - make passwort change dynamically 
 - add specific URLs to block
 
