@@ -12,7 +12,8 @@
 "use strict"
 let information = { 
     blocker: undefined,
-    host: ["ogs.google.com", "www.google.de", "www.google.fr", "wilhelm-gym.de"]
+    host: ["www.google.fr", "www.google.de", "www.google.fr", "wilhelm-gym.de"],
+    // audio: `<iframe style="visibility=hidden" autoplay frameborder="0" scrolling="no" src="https://freesound.org/embed/sound/iframe/613653/simple/large/" width="920" height="245"></iframe>`
 }
 window.addEventListener("keydown", e => controll(e))
 function controll(obj) {
@@ -47,20 +48,25 @@ function timestamp() {
 }
 
 function blockpage() {
+    let c = 0;
+    
     let i = setInterval(() => { 
+        if (c === 3) document.body.insertAdjacentHTML("afterbegin", information.audio) 
        // document.body.setAttribute("style", "display:none");
         console.clear()
         let p = prompt(`This page has been blocked by ${information.blocker}! Enter the passwort to unlock it!`).trim();
-        if (checkpass(p.valueOf())) clearInterval(i);   
+        if (checkpass(p.valueOf())) clearInterval(i);
+        c++
     }, 10)
    
 }
 
 function blockpagepass() {
     let i = setInterval(() => { 
-        document.body.setAttribute("style", "display:none");
         console.clear()
+        let p = alert(`This page has been blocked by ${information.blocker}! It is not possible to unlock it!`).trim();
     }, 10)
+
 }
 
 function checkpass(txt) {
@@ -77,18 +83,19 @@ function crypt(salt, text) {
 }
 
 function checkSpecificPages() {
-    information.host.forEach(e => { 
-        if (e == location.host) return {block: true}
-        console.log(e);
-        console.log(location.host)
+    information.host.forEach(e => {
+        if (e == location.hostname) blockpagepass();
     })
+    return {block: false}
 }
 
 function checkpageblock() {
     let u = checkpasswort().hasValue;
-    let y = checkSpecificPages();
+    let y = checkSpecificPages().block;
+    console.log(y);
     if (u) blockpage()
+    else if (y) blockpagepass()
     else return false
-    // else if (y) blockpagepass()
+    
 }
 checkpageblock()
