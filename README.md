@@ -5,7 +5,7 @@ This code may contain (unlikely) a few bugs! Please contact me in therefor in th
 It is important, that the user, that the page is blocked for, dosn't know tampermonkey! That's why it is good to release it from the Chrome-bar! <br>
 
 ## What does this script do?
-This script blocks any page you want, that needs a bit more security. Therefore, the passwort is crypted and is going to change itself with the time (coming soon!). Also it is possible to block pages with the URL. This can be put in the information-array.
+This script blocks any page you want, that needs a bit more security. Therefore, the passwort is crypted and is going to change itself with the time (coming soon!). Also it is possible to block page and its subpages (e.g. www.google.de and www.google.de/search?q=test) with the URL. This can be put in the information-array.
 ``` 
 let information = { 
     [...]
