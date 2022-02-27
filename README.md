@@ -17,12 +17,13 @@ It is also possible to fill in the username, that'll be displayed in the prompt 
 ``` python
 let information = { 
      blocker: undefined,
+     host: [...]
 }
 ```
 The default value is undefined.
 
 ## How to use this script?
-To use this script, you have to have the chrome-extension Tampermonkey. After adding the script there, you have to press <b>^<b> to block the page or to add a passwort. <br>
+To use this script, you have to have the chrome-extension Tampermonkey. After adding the script there, you have to press <b>^</b> to block the page or to add a passwort. <br>
 The passwort is just hardly changable, so trie to remember it good. Otherwise, I would betray the logic of the script, which isn't propably very hard to understand. <br>
     
 ## Future Add-Ons:
