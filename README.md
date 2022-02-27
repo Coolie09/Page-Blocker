@@ -1,20 +1,25 @@
-# PageBlocker [2.0] (Almost finished version)
+# PageBlocker [2.1] (Almost finished version)
 
 ## Warning! ⚠️
 This code may contain (unlikely) a few bugs! Please contact me in therefor in the issues section! Thx a lot! <br>
 It is important, that the user, that the page is blocked for, dosn't know tampermonkey! That's why it is good to release it from the Chrome-bar! <br>
 
 ## What does this script do?
-This script blocks any page you want, that needs a bit more security. Therefore, the passwort is crypted and is going to change itself with the time (coming soon!). Also it is possible to block pages with the URL. This can be putten in the information-array. (Coming soon!).
-``` python
+This script blocks any page you want, that needs a bit more security. Therefore, the passwort is crypted and is going to change itself with the time (coming soon!). Also it is possible to block pages with the URL. This can be put in the information-array.
+``` 
 let information = { 
     [...]
     host: ["ogs.google.com", "www.google.de", "www.google.fr", "wilhelm-gym.de"]
 }
 ```
+The URL you have to add is the hostname. To find out what the hostname is, you have to go to the repective page and put this into the console: <br>
+``` 
+location.hostname 
+```
+It is going to return the hostname which you have to copy and paste into the array.<br>
 It is also possible to fill in the username, that'll be displayed in the prompt of the blocked page. 
 
-``` python
+``` 
 let information = { 
      blocker: undefined,
      host: [...]
