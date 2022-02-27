@@ -27,7 +27,7 @@ To use this script, you have to have the chrome-extension Tampermonkey. After ad
 The passwort is just hardly changable, so trie to remember it good. Otherwise, I would betray the logic of the script, which isn't propably very hard to understand. <br>
     
 ## Future Add-Ons:
-- Add timer for page block <br> ⏱️
+- Add timer for page block ⏱️ <br> 
 - make passwort change dynamically 
 - add specific URLs to block
 
